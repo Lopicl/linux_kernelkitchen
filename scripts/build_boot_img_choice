@@ -1,0 +1,39 @@
+#!/bin/bash
+
+############################################################################
+#
+# Copyright (c) 2013 - Lopicl.00
+#
+# Kernel Kitchen is 100% free.  This script file is intended for personal
+# and/or educational use only.  It may not be duplicated for monetary
+# benefit or any other purpose without the permission of the developer.
+#
+############################################################################
+
+while :
+do
+
+  clear
+
+  echo
+  echo "Build boot.img"
+  echo "----------------"
+  echo
+  echo "Enter a choice:"
+  echo
+  echo "g = Build boot.img using gzip ramdisk"
+  echo "l = Build boot.img using lzma ramdisk"
+  echo
+  echo -n "? "
+
+  read enterLetter
+
+  if [ "$enterLetter" == "g" ]
+  then
+    scripts/build_boot_img_gzipramfs
+
+  elif [ "$enterLetter" == "l" ]
+  then
+    scripts/build_boot_img_lzmaramfs
+  fi
+done
