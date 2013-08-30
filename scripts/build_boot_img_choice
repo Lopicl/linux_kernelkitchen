@@ -24,16 +24,22 @@ do
   echo "g = Build boot.img using gzip ramdisk"
   echo "l = Build boot.img using lzma ramdisk"
   echo
+  echo "x = Return to main menu"
+  echo
   echo -n "? "
 
   read enterLetter
 
   if [ "$enterLetter" == "g" ]
   then
-    scripts/build_boot_img_gzipramfs
+    scripts/build_boot_img_gzip
 
   elif [ "$enterLetter" == "l" ]
   then
-    scripts/build_boot_img_lzmaramfs
+    scripts/build_boot_img_lzma
+
+  elif [ "$enterLetter" == "x" ]
+  then
+    ./menu
   fi
 done

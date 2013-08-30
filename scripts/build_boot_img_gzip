@@ -352,4 +352,5 @@ else
   exit_code=0
 fi
 
+./scripts/press_enter
 ./menu

@@ -10,7 +10,7 @@
 #
 ############################################################################
 
-version=0.001
+version=0.002
 
 
 if [ ! -e menu ]
@@ -141,10 +141,7 @@ do
   echo
   echo "  NOTE: Other options may not be shown in this menu *until* a specific"
   echo "  action above is selected or a specific working folder is created."
-  echo "  (A working folder is created with Option 1 of the kitchen main menu!)"
-  echo
-  echo "  e.g. You won't see the option to re-pack a boot.img unless you unpack"
-  echo "  the boot.img first! "
+  echo "  (A working folder is created automatically at first time kitchen boots up!)"
   echo
   echo -n "? "
 
