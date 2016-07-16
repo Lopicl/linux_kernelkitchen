@@ -9,8 +9,8 @@
 ############################################################################
 
 
-bin_list=( clear gcc java perl sed wget od wc cpio zip unzip )
-arg_list=( foo dumpversion version v -version V -version -version -version -help -help )
+bin_list=( clear gcc java perl sed wget od wc cpio zip unzip lzma lz4 )
+arg_list=( foo dumpversion version v -version V -version -version -version -help -help V V )
 
 show_header=1
 
@@ -63,7 +63,7 @@ do
     if [ "$bin" == "clear" ]
     then
       echo "        YES, THIS ERROR IS ALREADY COVERED IN THE FAQ.  DO NOT"
-      echo "        WASTE YOUR TIME MESSAGING ME. JUST READ IT, PLEASE. ;)"
+      echo "        WASTE YOUR TIME MESSAGING ME. GO TO DSIXDA KITCHEN FAQ"
       echo 
     fi
 

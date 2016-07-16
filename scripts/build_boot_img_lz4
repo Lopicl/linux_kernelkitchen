@@ -208,7 +208,7 @@ cd BOOT-EXTRACTED
 
 echo 
 echo "Creating ramdisk cpio archive ..."
-./$mkbootfs_file boot.img-ramdisk | lzma > ramdisk.xz
+./$mkbootfs_file boot.img-ramdisk | lz4 > ramdisk.lz4
 
 
 
@@ -292,9 +292,9 @@ fi
 
 if [ "$cmd_line" == "" ]
 then
-  ./$mkbootimg_file --kernel zImage --ramdisk ramdisk.xz -o newBoot.img --base $base $ramdisk_params
+  ./$mkbootimg_file --kernel zImage --ramdisk ramdisk.lz4 -o newBoot.img --base $base $ramdisk_params
 else
-  ./$mkbootimg_file --kernel zImage --ramdisk ramdisk.xz --cmdline "$cmd_line" -o newBoot.img --base $base $ramdisk_params
+  ./$mkbootimg_file --kernel zImage --ramdisk ramdisk.lz4 --cmdline "$cmd_line" -o newBoot.img --base $base $ramdisk_params
 fi
 
 

@@ -136,7 +136,7 @@ do
   fi
 
   echo "  a = Extract kernel+ramdisk from boot.img/recovery.img in any folder"
-  echo "  k = Restart Kitchen for refresh functions "
+  echo "  k = Restart Kitchen to refresh functions "
   echo "  x = Exit"
   echo
   echo "  NOTE: Other options may not be shown in this menu *until* a specific"

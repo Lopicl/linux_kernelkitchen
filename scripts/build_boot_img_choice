@@ -21,8 +21,9 @@ do
   echo
   echo "Enter a choice:"
   echo
-  echo "g = Build boot.img using gzip ramdisk"
-  echo "l = Build boot.img using lzma ramdisk"
+  echo "g = Build boot.img using GZIP ramdisk"
+  echo "l = Build boot.img using LZMA ramdisk"
+  echo "z = Build boot.img using LZ4  ramdisk"
   echo
   echo "x = Return to main menu"
   echo
@@ -37,6 +38,10 @@ do
   elif [ "$enterLetter" == "l" ]
   then
     scripts/build_boot_img_lzma
+
+  elif [ "$enterLetter" == "z" ]
+  then
+    scripts/build_boot_img_lz4
 
   elif [ "$enterLetter" == "x" ]
   then
