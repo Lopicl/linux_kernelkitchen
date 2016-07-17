@@ -10,7 +10,7 @@
 #
 ############################################################################
 
-version=0.002
+version=0.003
 
 
 if [ ! -e menu ]
@@ -73,11 +73,12 @@ do
   echo
   echo
   echo "Lopicl's Kernel Kitchen"
+  echo "Based on Dsixda's Android Kitchen!"
   echo "Version $version"
   echo
   echo "----------------"
   echo
-  echo "Put a boot.img in the WORKING folder for unlock hidden functions!"
+  echo "Put a boot.img in the WORKING folder to unlock hidden functions!"
   echo "Enter a choice:"
   echo 
 
@@ -119,25 +120,22 @@ do
       echo "  b = Build boot.img from BOOT-EXTRACTED folder (for working folder)"
       echo "  n = Build NAND's boot folder from BOOT-EXTRACTED (for working folder)"
       echo "  r = Remove BOOT-EXTRACTED folder (don't build anything)"
-    else
-      
-      if [ "$boot_img" == "true" ]
-      then
-        echo "  w = Extract kernel+ramdisk from boot.img"
-        echo "  c = Convert boot.img into NAND boot folder"
-        echo "  p = Change 'command line' parameter in boot.img"
+    elif [ "$boot_img" == "true" ]
+    then
+      echo "  w = Extract kernel+ramdisk from boot.img"
+      echo "  c = Convert boot.img into NAND boot folder"
+      echo "  p = Change 'command line' parameter in boot.img"
 
-      elif [ "$boot_folder" == "true" ]
-      then
-        echo "  y = Convert NAND boot folder into boot.img"
-        echo "  z = Extract kernel+ramdisk from NAND boot folder"
-      fi
+    elif [ "$boot_folder" == "true" ]
+    then
+      echo "  y = Convert NAND boot folder into boot.img"
+      echo "  z = Extract kernel+ramdisk from NAND boot folder"
     fi
   fi
 
+
   echo "  a = Extract kernel+ramdisk from boot.img/recovery.img in any folder"
   echo "  k = Restart Kitchen to refresh functions "
-  echo "  x = Exit"
   echo
   echo "  NOTE: Other options may not be shown in this menu *until* a specific"
   echo "  action above is selected or a specific working folder is created."
@@ -147,62 +145,79 @@ do
 
   read enterLetter
 
-  if [ "$enterLetter" == "s" ]
-  then
-    scripts/show_boot_img_info
+  key=$enterLetter
 
-  elif [ "$enterLetter" == "w" ]
+  if [ "$boot_img" == "true" ]
   then
-    scripts/ensure_boot_extracted
+    if [ "$key" == "s" ]
+    then
+      scripts/show_boot_img_info
+    else :
+    fi
+  else :
+  fi
 
-  elif [ "$enterLetter" == "r" ] 
+  if [ "$extracted" == "true" ]
   then
-    rm -rf BOOT-EXTRACTED; echo; echo "Deleted"
+    if [ "$key" == "b" ] 
+    then
+      scripts/prompt_build_bootimg
+    elif [ "$key" == "n" ]
+    then
+      scripts/prompt_build_boot
+      scripts/build_nand_boot
+    elif [ "$key" == "r" ] 
+    then
+      rm -rf BOOT-EXTRACTED; echo; echo "Deleted"
+    else :
+    fi
+  else :
+  fi
 
-  elif [ "$enterLetter" == "b" ] 
+  if [ "$boot_img" == "true" ]
   then
-    scripts/prompt_build_bootimg
-
-  elif [ "$enterLetter" == "a" ]
+    if [ "$key" == "w" ]
+    then
+      scripts/ensure_boot_extracted
+    elif [ "$key" == "c" ]
+    then
+      scripts/ensure_boot_extracted
+      scripts/build_nand_boot
+    elif [ "$key" == "p" ]
+    then
+      scripts/change_cmdline
+    else :
+    fi
+  else :
+  fi
+  
+  if [ "$boot_folder" == "true" ]
+  then
+    if [ "$key" == "y" ]
+    then
+      scripts/ensure_nand_extracted
+      scripts/build_boot_img
+    elif [ "$key" == "z" ]
+    then
+      scripts/ensure_nand_extracted
+    else :
+    fi
+  else :
+  fi
+  
+  if [ "$key" == "a" ]
   then
     scripts/extract_boot_img
 
-  elif [ "$enterLetter" == "n" ]
-  then
-    scripts/prompt_build_boot
-    scripts/build_nand_boot
 
-  elif [ "$enterLetter" == "k" ]
+  elif [ "$key" == "k" ]
   then
-    ./menu
+    bash ./menu
 
-  elif [ "$enterLetter" == "c" ]
-  then
-    scripts/ensure_boot_extracted
-    scripts/build_nand_boot
-
-  elif [ "$enterLetter" == "p" ]
-  then
-    scripts/change_cmdline
-
-  elif [ "$enterLetter" == "y" ]
-  then
-    scripts/ensure_nand_extracted
-    scripts/build_boot_img
-
-  elif [ "$enterLetter" == "z" ]
-  then
-    scripts/ensure_nand_extracted
-
-  elif [ "$enterLetter" == "x" ]
-  then
-    exit 0
   else 
-    echo "Invalid option"
-    continue
+    scripts/press_enter
+    bash ./menu
   fi
 
   scripts/press_enter
-
 done
-

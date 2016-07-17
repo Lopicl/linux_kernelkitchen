@@ -44,18 +44,39 @@ chdir "$ARGV[0]-ramdisk" or die;
 }
 
 
-if (substr($ram1, 0, 2) eq "\x1F\x8B") {
+if (substr($ram1, 0, 2) eq "\x1F\x8B")
+{
 print "gzip\n";
 open (RAM1FILE, ">$ARGV[0]-ramdisk.cpio.gz");
 extract();
 system ("gzip -d -c ../$ARGV[0]-ramdisk.cpio.gz | cpio -i");
 system ("rm ../$ARGV[0]-ramdisk.cpio.gz");
-} elsif ($ram1 =~ /\x5D\x00...\xFF\xFF\xFF\xFF\xFF\xFF/) {
+} 
+elsif ($ram1 =~ /\x5D\x00...\xFF\xFF\xFF\xFF\xFF\xFF/)
+{
 print "lzma\n";
 open (RAM1FILE, ">$ARGV[0]-ramdisk.cpio.lzma");
 extract();
 system ("lzcat ../$ARGV[0]-ramdisk.cpio.lzma | cpio -i");
 system ("rm ../$ARGV[0]-ramdisk.cpio.lzma");
-} else {
-die "Not a gzip or a lzma file";
+} 
+elsif (substr($ram1, 0, 2) eq "\x04\x22")
+{
+print "lz4\n";
+open (RAM1FILE, ">$ARGV[0]-ramdisk.cpio.lz4");
+extract();
+system ("lz4c -d ../$ARGV[0]-ramdisk.cpio.lz4 | cpio -i");
+system ("rm ../$ARGV[0]-ramdisk.cpio.lz4");
+}
+elsif (substr($ram1, 0, 2) eq "\x02\x21")
+{
+print "lz4\n";
+open (RAM1FILE, ">$ARGV[0]-ramdisk.cpio.lz4");
+extract();
+system ("lz4c -d ../$ARGV[0]-ramdisk.cpio.lz4 | cpio -i");
+system ("rm ../$ARGV[0]-ramdisk.cpio.lz4");
+}
+else
+{
+die "Not a gzip or lz4 or lzma file";
 }
