@@ -52,7 +52,7 @@ extract();
 system ("gzip -d -c ../$ARGV[0]-ramdisk.cpio.gz | cpio -i");
 system ("rm ../$ARGV[0]-ramdisk.cpio.gz");
 } 
-elsif ($ram1 =~ /\x5D\x00...\xFF\xFF\xFF\xFF\xFF\xFF/)
+elsif (substr($ram1, 0, 2) eq "\x5D\x00")
 {
 print "lzma\n";
 open (RAM1FILE, ">$ARGV[0]-ramdisk.cpio.lzma");

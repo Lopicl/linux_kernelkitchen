@@ -208,7 +208,7 @@ cd BOOT-EXTRACTED
 
 echo 
 echo "Creating ramdisk cpio archive ..."
-./$mkbootfs_file boot.img-ramdisk | lz4 > ramdisk.lz4
+./$mkbootfs_file boot.img-ramdisk | lz4 -l > ramdisk.lz4
 
 
 
